@@ -1,11 +1,11 @@
 import React from "react";
 import Button from "./Button.jsx";
 
-function Friend({ friend }) {
+function Friend({ friend, onSelection, selectedFriend }) {
   const { id, name, image, balance } = friend;
-
+  const isSelected = selectedFriend?.id === friend.id;
   return (
-    <li>
+    <li className={isSelected ? "selected" : ""}>
       <img src={image} alt={name} />
       <h3>{name}</h3>
 
@@ -23,7 +23,9 @@ function Friend({ friend }) {
 
       {balance === 0 && <p className="">You and {name} are even</p>}
 
-      <Button>Select</Button>
+      <Button onClick={() => onSelection(friend)}>
+        {isSelected ? "Close" : "select"}
+      </Button>
     </li>
   );
 }
