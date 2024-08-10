@@ -4,7 +4,7 @@ import FormAddFriend from "./components/FormAddFriend";
 import FormSplitBill from "./components/FormSplitBill";
 import Button from "./components/Button";
 
-const friends = [
+const initFriends = [
   {
     id: 118836,
     name: "Clark",
@@ -26,17 +26,23 @@ const friends = [
 ];
 
 function App() {
+  const [friends, setFriends] = useState(initFriends);
   const [showAddFriend, setShowAddFriend] = useState(false);
 
-  const handleShowAddFriend = () => {
+  function handleShowAddFriend() {
     setShowAddFriend((show) => !show);
-  };
+  }
+
+  function handleAddFriend(friend) {
+    setFriends((initFriend) => [...initFriend, friend]);
+    setShowAddFriend(false);
+  }
 
   return (
     <div className="app">
       <div className="sidebar">
         <FriendList friendList={friends} />
-        {showAddFriend && <FormAddFriend />}
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
         <Button onClick={handleShowAddFriend}>
           {showAddFriend ? "Close" : "Add friend"}
         </Button>

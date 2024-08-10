@@ -3,7 +3,7 @@ import Button from "./Button";
 
 function FormSplitBill() {
   return (
-    <form className="forn-split-bill">
+    <form className="form-split-bill">
       <h2>Split a bill with XX </h2>
 
       <label>💰 Bill value</label>
