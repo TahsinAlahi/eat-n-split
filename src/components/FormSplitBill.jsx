@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import Button from "./Button";
 
-function FormSplitBill({ selectedFriend }) {
+function FormSplitBill({ selectedFriend, onSplitBill }) {
   const [bill, setBill] = useState("");
   const [paidByUser, setPaidByUser] = useState("");
+  const paidByFriend = bill ? bill - paidByUser : "";
   const [whoIsPaying, setWhoIsPaying] = useState("user");
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!bill || !paidByUser) return;
+
+    onSplitBill(whoIsPaying === "user" ? paidByUser : -paidByFriend);
+  }
+
   return (
-    <form className="form-split-bill">
+    <form className="form-split-bill" onSubmit={handleSubmit}>
       <h2>Split a bill with {selectedFriend.name} </h2>
 
       <label>💰 Bill value</label>
@@ -29,7 +38,7 @@ function FormSplitBill({ selectedFriend }) {
       />
 
       <label>🧍‍♀️{selectedFriend.name}'s expense</label>
-      <input type="text" value={bill - paidByUser} disabled />
+      <input type="text" value={paidByFriend} disabled />
 
       <label>🤑 Who is paying the bill</label>
       <select
